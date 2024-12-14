@@ -180,26 +180,6 @@ class Maze(gym.Env):
                 distances[neighbour] = min(distances[neighbour], distances[closest] + 1)
         return distances
 
-# Run the below Code in ipy Notebooks 
-
-# def display_video(frames):
-#     # Copied from: https://colab.research.google.com/github/deepmind/dm_control/blob/master/tutorial.ipynb
-#     orig_backend = matplotlib.get_backend()
-#     matplotlib.use('Agg')
-#     fig, ax = plt.subplots(1, 1, figsize=(5, 5))
-#     matplotlib.use(orig_backend)
-#     ax.set_axis_off()
-#     ax.set_aspect('equal')
-#     ax.set_position([0, 0, 1, 1])
-#     im = ax.imshow(frames[0])
-#     def update(frame):
-#         im.set_data(frame)
-#         return [im]
-    
-#     anim = animation.FuncAnimation(fig=fig, func=update, frames=frames,
-#                                     interval=50, blit=True, repeat=False)
-    
-#     return HTML(anim.to_html5_video())
 
 
 
