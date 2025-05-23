@@ -13,6 +13,8 @@ class DQN(nn.Module):
         x = Fn.relu(self.layer1(x))
         return self.layer2(x)
     
+# if __name__ == '__main__':
+
 
 
 # model = DQN(10, 15, 4)
