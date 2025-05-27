@@ -3,7 +3,7 @@ import gymnasium
 from dqn import DQN
 import torch
 from experience_replay import ReplayMemory
-import yaml
+import yaml 
 import argparse
 import random
 from torch import nn
@@ -154,6 +154,7 @@ class Agent:
 
                     torch.save(policy_network.state_dict(), self.MODEL_FILE)
                     best_reward = episode_reward
+                # print("just checking: ", episode_reward )
 
 
                 # Update graph every x seconds
@@ -229,7 +230,11 @@ class Agent:
 
         
         with torch.no_grad():
-            target_batch_Q = rewards + (1-terminated) * self.discount_factor * target_network(newStates).max(dim = 1)[0]
+            if(self.enable_double_dqn):
+                best_action_from_policy = policy_network(newStates).argmax(dim=1)
+                target_batch_Q = rewards + (1-terminated) * self.discount_factor * target_network(newStates).gather(dim = 1, index = best_action_from_policy.unsqueeze(dim=1)).squeeze()
+            else:
+                target_batch_Q = rewards + (1-terminated) * self.discount_factor * target_network(newStates).max(dim = 1)[0]
 
         current_batch_Q = policy_network(states).gather(dim=1, index=actions.unsqueeze(dim=1)).squeeze() 
 
